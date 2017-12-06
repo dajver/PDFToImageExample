@@ -15,19 +15,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import project.dajver.com.pdftoimage.task.utils.FileUtils;
-
 /**
  * Created by gleb on 12/6/17.
  */
 
-public class PDFToImage extends AsyncTask<File, Void, String> {
+public class PDFToImageTask extends AsyncTask<File, Void, String> {
 
     private Context context;
     private OnPDFToImageConvertedListener onPDFToImageConvertedListener;
     private String fileName;
 
-    public PDFToImage(Context context) {
+    public PDFToImageTask(Context context) {
         this.context = context;
     }
 
@@ -35,7 +33,7 @@ public class PDFToImage extends AsyncTask<File, Void, String> {
     protected String doInBackground(File... files) {
         File originFile = files[0];
         fileName = originFile.getName().toLowerCase().replace(".pdf", ".jpeg").replace(".ppt", ".jpeg");
-        File filePath = FileUtils.getCacheDir(context);
+        File filePath = getCacheDir(context);
         File file = new File (filePath, fileName);
         String path = file.getPath();
         if(!new File(path).exists()) {
@@ -53,7 +51,7 @@ public class PDFToImage extends AsyncTask<File, Void, String> {
                         int height = (int) (page.getHeight() * scaleBy);
                         Bitmap bitmap = page.renderBitmap(with, height, rectF);
                         try {
-                            OutputStream outputStream = new FileOutputStream(new File(FileUtils.getCacheDir(context), System.currentTimeMillis() + ".JPEG"));
+                            OutputStream outputStream = new FileOutputStream(new File(getCacheDir(context), System.currentTimeMillis() + ".JPEG"));
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                             outputStream.close();
                             path = saveImageAndGetURI(bitmap).toString();
@@ -75,7 +73,7 @@ public class PDFToImage extends AsyncTask<File, Void, String> {
     }
 
     private Uri saveImageAndGetURI(Bitmap finalBitmap) {
-        File file = new File (FileUtils.getCacheDir(context), fileName);
+        File file = new File (getCacheDir(context), fileName);
         if (file.exists ()) file.delete ();
         try {
             FileOutputStream out = new FileOutputStream(file);
@@ -86,6 +84,10 @@ public class PDFToImage extends AsyncTask<File, Void, String> {
             e.printStackTrace();
         }
         return Uri.parse(file.getPath());
+    }
+
+    private File getCacheDir(Context context) {
+        return context.getCacheDir();
     }
 
     public void setOnPDFToImageConvertedListener(OnPDFToImageConvertedListener onPDFToImageConvertedListener) {

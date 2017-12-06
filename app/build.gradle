@@ -25,6 +25,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
 
+    compile 'com.karumi:dexter:4.2.0'
     compile project(':pdfview')
 
     implementation 'com.jakewharton:butterknife:8.8.1'
