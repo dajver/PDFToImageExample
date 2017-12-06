@@ -25,7 +25,8 @@ import butterknife.OnClick;
 import project.dajver.com.pdftoimage.task.PDFToImageTask;
 import project.dajver.com.pdftoimage.task.utils.ImageFilePathUtils;
 
-public class MainActivity extends AppCompatActivity implements PDFToImageTask.OnPDFToImageConvertedListener, MultiplePermissionsListener {
+public class MainActivity extends AppCompatActivity implements PDFToImageTask.OnPDFToImageConvertedListener,
+        MultiplePermissionsListener {
 
     @BindView(R.id.image)
     ImageView imageView;
