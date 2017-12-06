@@ -1,4 +1,4 @@
-package project.dajver.com.pdftoimage;
+package project.dajver.com.pdftoimage.task;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import project.dajver.com.pdftoimage.task.utils.FileUtils;
 
 /**
  * Created by gleb on 12/6/17.

@@ -12,6 +12,8 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import project.dajver.com.pdftoimage.task.PDFToImage;
+import project.dajver.com.pdftoimage.task.utils.ImageFilePathUtils;
 
 public class MainActivity extends AppCompatActivity implements PDFToImage.OnPDFToImageConvertedListener {
 

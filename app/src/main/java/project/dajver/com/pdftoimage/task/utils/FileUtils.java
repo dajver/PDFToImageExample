@@ -1,4 +1,4 @@
-package project.dajver.com.pdftoimage;
+package project.dajver.com.pdftoimage.task.utils;
 
 import android.content.Context;
 
