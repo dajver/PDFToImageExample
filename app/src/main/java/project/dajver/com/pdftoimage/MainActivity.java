@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements PDFToImageTask.On
         startActivityForResult(intent, PICKFILE_REQUEST_CODE);
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK) {
             progressBar.setVisibility(View.VISIBLE);

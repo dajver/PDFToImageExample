@@ -32,7 +32,7 @@ public class PDFToImageTask extends AsyncTask<File, Void, String> {
     @Override
     protected String doInBackground(File... files) {
         File originFile = files[0];
-        fileName = originFile.getName().toLowerCase().replace(".pdf", ".jpeg").replace(".ppt", ".jpeg");
+        fileName = originFile.getName().toLowerCase().replace(".pdf", ".jpeg");
         File filePath = getCacheDir(context);
         File file = new File (filePath, fileName);
         String path = file.getPath();
@@ -43,21 +43,19 @@ public class PDFToImageTask extends AsyncTask<File, Void, String> {
                 if (originFile.exists()) {
                     decodeService.open(Uri.fromFile(originFile));
                     int pageCount = decodeService.getPageCount();
-                    for (int i = 0; i < 1; i++) {
-                        CodecPage page = decodeService.getPage(i);
-                        RectF rectF = new RectF(0, 0, 1, 1);
-                        double scaleBy = Math.min(2480 / (double) page.getWidth(), 3508 / (double) page.getHeight());
-                        int with = (int) (page.getWidth() * scaleBy);
-                        int height = (int) (page.getHeight() * scaleBy);
-                        Bitmap bitmap = page.renderBitmap(with, height, rectF);
-                        try {
-                            OutputStream outputStream = new FileOutputStream(new File(getCacheDir(context), System.currentTimeMillis() + ".JPEG"));
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-                            outputStream.close();
-                            path = saveImageAndGetURI(bitmap).toString();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    CodecPage page = decodeService.getPage(0);
+                    RectF rectF = new RectF(0, 0, 1, 1);
+                    double scaleBy = Math.min(2480 / (double) page.getWidth(), 3508 / (double) page.getHeight());
+                    int with = (int) (page.getWidth() * scaleBy);
+                    int height = (int) (page.getHeight() * scaleBy);
+                    Bitmap bitmap = page.renderBitmap(with, height, rectF);
+                    try {
+                        OutputStream outputStream = new FileOutputStream(new File(getCacheDir(context), System.currentTimeMillis() + ".JPEG"));
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                        outputStream.close();
+                        path = saveImageAndGetURI(bitmap).toString();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             } catch (Exception ex) {
